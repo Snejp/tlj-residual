@@ -26,7 +26,7 @@
 #ifndef STARK_SKELETON_ANIM_H
 #define STARK_SKELETON_ANIM_H
 
-#include "graphics/vector3d.h"
+#include "math/vector3d.h"
 #include "engines/stark/gfx/coordinate.h"
 #include "common/array.h"
 

@@ -220,11 +220,11 @@ void TinyGLGfxDriver::setupCamera(float fov, float nclip, float fclip, float rol
 	tglRotatef(roll, 0, 0, -1);
 }
 
-void TinyGLGfxDriver::positionCamera(Graphics::Vector3d pos, Graphics::Vector3d interest) {
-	Graphics::Vector3d up_vec(0, 0, 1);
+void TinyGLGfxDriver::positionCamera(Math::Vector3d pos, Math::Vector3d interest) {
+	Math::Vector3d up_vec(0, 0, 1);
 
 	if (pos.x() == interest.x() && pos.y() == interest.y())
-		up_vec = Graphics::Vector3d(0, 1, 0);
+		up_vec = Math::Vector3d(0, 1, 0);
 
 	lookAt(pos.x(), pos.y(), pos.z(), interest.x(), interest.y(), interest.z(), up_vec.x(), up_vec.y(), up_vec.z());
 }
@@ -233,7 +233,7 @@ bool TinyGLGfxDriver::isHardwareAccelerated() {
 	return false;
 }
 
-static void tglShadowProjection(Graphics::Vector3d light, Graphics::Vector3d plane, Graphics::Vector3d normal, bool dontNegate) {
+static void tglShadowProjection(Math::Vector3d light, Math::Vector3d plane, Math::Vector3d normal, bool dontNegate) {
 	// Based on GPL shadow projection example by
 	// (c) 2002-2003 Phaetos <phaetos@gaffga.de>
 	float d, c;
@@ -298,7 +298,7 @@ void TinyGLGfxDriver::getBoundingBoxPos(const Model::Mesh *model, int *x1, int *
 	TGLfloat winX, winY, winZ;
 
 	for (int i = 0; i < model->_numFaces; i++) {
-		Graphics::Vector3d v;
+		Math::Vector3d v;
 		float* pVertices;
 
 		for (int j = 0; j < model->_faces[i]._numVertices; j++) {
@@ -368,7 +368,7 @@ void TinyGLGfxDriver::getBoundingBoxPos(const Model::Mesh *model, int *x1, int *
 	}*/
 }
 
-void TinyGLGfxDriver::startActorDraw(Graphics::Vector3d pos, float yaw, float pitch, float roll) {
+void TinyGLGfxDriver::startActorDraw(Math::Vector3d pos, float yaw, float pitch, float roll) {
 	tglEnable(TGL_TEXTURE_2D);
 	tglMatrixMode(TGL_MODELVIEW);
 	tglPushMatrix();
@@ -479,7 +479,7 @@ void TinyGLGfxDriver::drawModelFace(const Model::Face *face, float *vertices, fl
 	tglEnd();
 }
 
-void TinyGLGfxDriver::translateViewpointStart(Graphics::Vector3d pos, float pitch, float yaw, float roll) {
+void TinyGLGfxDriver::translateViewpointStart(Math::Vector3d pos, float pitch, float yaw, float roll) {
 	tglPushMatrix();
 
 	tglTranslatef(pos.x(), pos.y(), pos.z());
