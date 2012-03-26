@@ -1,39 +1,39 @@
-Index: configure
-===================================================================
---- configure	(revision 1651)
-+++ configure	(working copy)
-@@ -76,6 +76,7 @@
- }
+diff --git a/base/plugins.cpp b/base/plugins.cpp
+index 5eaf5fb..0bde7d0 100644
+--- a/base/plugins.cpp
++++ b/base/plugins.cpp
+@@ -91,6 +91,9 @@ public:
+ 		#if PLUGIN_ENABLED_STATIC(MYST3)
+ 		LINK_PLUGIN(MYST3)
+ 		#endif
++		#if PLUGIN_ENABLED_STATIC(STARK)
++		LINK_PLUGIN(STARK)
++		#endif
  
- add_engine grim "Grim" yes
+ 		// Music plugins
+ 		// TODO: Use defines to disable or enable each MIDI driver as a
+diff --git a/configure b/configure
+index 5b4c707..551495a 100755
+--- a/configure
++++ b/configure
+@@ -80,6 +80,7 @@ add_engine() {
+ add_engine grim "Grim" yes "monkey4"
+ add_engine monkey4 "Escape from Monkey Island" yes
+ add_engine myst3 "Myst 3" yes
 +add_engine stark "The Longest Journey" yes
  
- 
  #
-Index: engines/engines.mk
-===================================================================
---- engines/engines.mk	(revision 1651)
-+++ engines/engines.mk	(working copy)
-@@ -2,3 +2,8 @@
- DEFINES += -DENABLE_GRIM=$(ENABLE_GRIM)
- MODULES += engines/grim
+ # Default settings
+diff --git a/engines/engines.mk b/engines/engines.mk
+index cfe004e..1abbddb 100644
+--- a/engines/engines.mk
++++ b/engines/engines.mk
+@@ -12,3 +12,8 @@ ifdef ENABLE_MYST3
+ DEFINES += -DENABLE_MYST3=$(ENABLE_MYST3)
+ MODULES += engines/myst3
  endif
 +
 +ifdef ENABLE_STARK
 +DEFINES += -DENABLE_STARK=$(ENABLE_STARK)
 +MODULES += engines/stark
 +endif
-Index: base/plugins.cpp
-===================================================================
---- base/plugins.cpp	(revision 1651)
-+++ base/plugins.cpp	(working copy)
-@@ -91,6 +91,9 @@
- 		#if PLUGIN_ENABLED_STATIC(GRIM)
- 		LINK_PLUGIN(GRIM)
- 		#endif
-+		#if PLUGIN_ENABLED_STATIC(STARK)
-+		LINK_PLUGIN(STARK)
-+		#endif
- 
- 		return pl;
- 	}
