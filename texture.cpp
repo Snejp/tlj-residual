@@ -60,6 +60,8 @@ bool Texture::createFromStream(Common::ReadStream *stream) {
 	return true;
 }
 
+#include <GL/glu.h> // HACK: for gluBuild2DMipmaps
+
 bool Texture::readChunk(Common::ReadStream *stream, uint32 format) {
 	uint32 marker = stream->readUint32LE();
 	if (marker != 0xf0f0f0f0)

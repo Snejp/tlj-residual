@@ -39,9 +39,9 @@ namespace Stark {
 class AnimKey {
 public:
 	uint32 _time;
-	Graphics::Vector3d _rot;
+	Math::Vector3d _rot;
 	float _rotW;
-	Graphics::Vector3d _pos;
+	Math::Vector3d _pos;
 };
 
 class AnimNode {

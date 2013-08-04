@@ -26,6 +26,7 @@
 #include "engines/stark/gfx/opengl.h"
 
 #include "common/system.h"
+#include "graphics/pixelbuffer.h" // FIX: for setupScreen
 
 #ifdef USE_OPENGL
 
@@ -49,7 +50,7 @@ const char *OpenGLGfxDriver::getVideoDeviceName() {
 }
 
 void OpenGLGfxDriver::setupScreen(int screenW, int screenH, bool fullscreen) {
-	g_system->setupScreen(screenW, screenH, fullscreen, true);
+	Graphics::PixelBuffer buf = g_system->setupScreen(screenW, screenH, fullscreen, true);
 
 	_screenWidth = screenW;
 	_screenHeight = screenH;

@@ -52,7 +52,7 @@ const char *TinyGLGfxDriver::getVideoDeviceName() {
 }
 
 void TinyGLGfxDriver::setupScreen(int screenW, int screenH, bool fullscreen) {
-	byte *buffer = g_system->setupScreen(screenW, screenH, fullscreen, false);
+	Graphics::PixelBuffer buf = g_system->setupScreen(screenW, screenH, fullscreen, false);
 
 	_screenWidth = screenW;
 	_screenHeight = screenH;
@@ -61,7 +61,7 @@ void TinyGLGfxDriver::setupScreen(int screenW, int screenH, bool fullscreen) {
 
 	//g_system->setWindowCaption("Residual: Software 3D Renderer");
 
-	_zb = TinyGL::ZB_open(screenW, screenH, ZB_MODE_5R6G5B, buffer);
+	_zb = TinyGL::ZB_open(screenW, screenH, buf);
 	TinyGL::glInit(_zb);
 
 	/*
@@ -78,9 +78,10 @@ void TinyGLGfxDriver::setupScreen(int screenW, int screenH, bool fullscreen) {
 }
 
 void TinyGLGfxDriver::clearScreen() {
-	memset(_zb->pbuf, 0, 640 * 480 * 2);
-	memset(_zb->zbuf, 0, 640 * 480 * 2);
-	memset(_zb->zbuf2, 0, 640 * 480 * 4);
+	_zb->pbuf.clear(640 * 480 * 2);
+	//memset(_zb->pbuf, 0, 640 * 480 * 2);
+	//memset(_zb->zbuf, 0, 640 * 480 * 2);
+	//memset(_zb->zbuf2, 0, 640 * 480 * 4);
 }
 
 void TinyGLGfxDriver::flipBuffer() {
@@ -98,7 +99,7 @@ void TinyGLGfxDriver::drawSurface(const Graphics::Surface *surface, Common::Poin
 		byte g = pixel[1];
 		byte b = pixel[2];
 		uint16 color = ((r & 0xF8) << 8) | ((g & 0xFC) << 3) | (b >> 3);
-		_zb->pbuf[i] = color;
+		_zb->pbuf.setPixelAt(i,color);
 	}
 
 	//memcpy(_zb->pbuf, surface->pixels, numPixels);
