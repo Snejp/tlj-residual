@@ -94,7 +94,7 @@ void TinyGLGfxDriver::drawSurface(const Graphics::Surface *surface, Common::Poin
 		rect = Common::Rect(surface->w, surface->h);
 
 	for (int i = 0; i < surface->w * surface->h; i++) {
-		byte *pixel = (byte *)surface->pixels + (i * 3);
+		byte *pixel = (byte *)surface->getPixels() + (i * 3);
 		byte r = pixel[0];
 		byte g = pixel[1];
 		byte b = pixel[2];

@@ -85,7 +85,7 @@ void OpenGLGfxDriver::drawSurface(const Graphics::Surface *surface, Common::Poin
 	float rasterX = (2 * (float)dest.x / (float)_screenWidth);
 	float rasterY = (2 * (float)dest.y / (float)_screenHeight);
 	glRasterPos2f(-1.0f + rasterX, 1.0f - rasterY);
-	glDrawPixels(surface->w, surface->h, GL_RGBA, GL_UNSIGNED_BYTE, surface->pixels);
+	glDrawPixels(surface->w, surface->h, GL_RGBA, GL_UNSIGNED_BYTE, surface->getPixels());
 
 	//glBegin(GL_QUADS); glVertex3i(-1, -1, -1); glVertex3i(1, -1, -1); glVertex3i(1, 1, -1); glVertex3i(-1, 1, -1); glEnd();
 
