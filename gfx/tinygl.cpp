@@ -43,7 +43,7 @@ TinyGLGfxDriver::~TinyGLGfxDriver() {
 	//delete[] _storedDisplay;
 	if (_zb) {
 		TinyGL::glClose();
-		ZB_close(_zb);
+		delete _zb;
 	}
 }
 
@@ -61,8 +61,8 @@ void TinyGLGfxDriver::setupScreen(int screenW, int screenH, bool fullscreen) {
 
 	//g_system->setWindowCaption("Residual: Software 3D Renderer");
 
-	_zb = TinyGL::ZB_open(screenW, screenH, buf);
-	TinyGL::glInit(_zb);
+	_zb = new TinyGL::FrameBuffer(screenW, screenH, buf);
+	TinyGL::glInit(_zb, 256);
 
 	/*
 	//_storedDisplay = new byte[640 * 480 * 2];
@@ -78,7 +78,7 @@ void TinyGLGfxDriver::setupScreen(int screenW, int screenH, bool fullscreen) {
 }
 
 void TinyGLGfxDriver::clearScreen() {
-	_zb->pbuf.clear(640 * 480 * 2);
+	_zb->clear(1, 0, 0, 0, 0, 0);
 	//memset(_zb->pbuf, 0, 640 * 480 * 2);
 	//memset(_zb->zbuf, 0, 640 * 480 * 2);
 	//memset(_zb->zbuf2, 0, 640 * 480 * 4);
@@ -99,7 +99,7 @@ void TinyGLGfxDriver::drawSurface(const Graphics::Surface *surface, Common::Poin
 		byte g = pixel[1];
 		byte b = pixel[2];
 		uint16 color = ((r & 0xF8) << 8) | ((g & 0xFC) << 3) | (b >> 3);
-		_zb->pbuf.setPixelAt(i,color);
+		_zb->writePixel(i, color);
 	}
 
 	//memcpy(_zb->pbuf, surface->pixels, numPixels);
