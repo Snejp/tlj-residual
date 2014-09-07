@@ -60,8 +60,6 @@ bool Texture::createFromStream(Common::ReadStream *stream) {
 	return true;
 }
 
-#include <GL/glu.h> // HACK: for gluBuild2DMipmaps
-
 bool Texture::readChunk(Common::ReadStream *stream, uint32 format) {
 	uint32 marker = stream->readUint32LE();
 	if (marker != 0xf0f0f0f0)
@@ -114,16 +112,17 @@ bool Texture::readChunk(Common::ReadStream *stream, uint32 format) {
 		uint32 w = stream->readUint32LE();
 		uint32 h = stream->readUint32LE();
 		int levels = stream->readUint32LE();
+
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_BASE_LEVEL, 0);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, (levels - 1));
+
 		for (int i = 0; i < levels; ++i) {
 			uint32 *img = new uint32[w * h];
 
 			for (int j = 0; j < w * h; ++j)
 				img[j] = _palette[stream->readByte()];
 
-			if (i == 0)
-				gluBuild2DMipmaps(GL_TEXTURE_2D, 4, w, h, GL_RGBA, GL_UNSIGNED_BYTE, img);
-
-			//glTexImage2D(GL_TEXTURE_2D, i, GL_RGBA, w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, img);		// For whatever reason, this doesn't work...
+			glTexImage2D(GL_TEXTURE_2D, i, GL_RGBA, w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, img);
 
 			delete[] img;
 
