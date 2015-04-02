@@ -107,7 +107,7 @@ public:
 	*/
 
 private:
-	TinyGL::ZBuffer *_zb;
+	TinyGL::FrameBuffer *_zb;
 	byte *_screen;
 	byte *_smushBitmap;
 	int _smushWidth;
